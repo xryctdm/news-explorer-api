@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 
-const getUser = (req, res, next) => {
-  User.findById(req.params.userId)
+const getUser = (req, res) => {
+  User.findById(req.user._id)
     .then((user) => res.send({
       name: user.name,
       email: user.email,
@@ -42,7 +42,7 @@ const login = (req, res) => {
       res.send({ token });
     })
     .catch((err) => {
-      res.status(401).send({ message: 'Произошла ошибка' });
+      res.status(401).send({ message: 'Неправильная почта или пароль' });
     });
 };
 
