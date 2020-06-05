@@ -1,18 +1,20 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const errors = require('./middlewares/request-err');
 
+const { mongoUrl, port } = require('./config');
+
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const error = require('./middlewares/error');
 
-const { PORT = 3000 } = process.env;
-
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/news-explorer', {
+mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -33,6 +35,6 @@ app.use(errorLogger);
 app.use(errors);
 app.use(error);
 
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`App listening on port ${port}`);
 });
