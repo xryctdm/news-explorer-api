@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const errors = require('./middlewares/request-err');
 
 const router = require('./routes/index');
@@ -23,6 +24,8 @@ app.use(requestLogger);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(helmet());
 
 app.use(router);
 
