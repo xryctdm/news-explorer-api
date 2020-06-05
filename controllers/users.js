@@ -3,18 +3,18 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const { BadRequestError, AuthorizationError } = require('../errors/index');
 
-
-const getUser = (req, res) => {
+const getUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => res.send({
       name: user.name,
       email: user.email,
     }))
-    .catch(err => res.status(500).send({ message: 'произошла хз ошибка' }));
+    .catch(next);
 };
 
-const createUser = (req, res) => {
+const createUser = (req, res, next) => {
   const {
     email, password, name,
   } = req.body;
@@ -27,10 +27,10 @@ const createUser = (req, res) => {
       name: user.name,
       email: user.email,
     }))
-    .catch((err) => res.status(400).send(err));
+    .catch(() => next(new BadRequestError('Данные введены непраильно')));
 };
 
-const login = (req, res) => {
+const login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
@@ -41,9 +41,7 @@ const login = (req, res) => {
       });
       res.send({ token });
     })
-    .catch((err) => {
-      res.status(401).send({ message: 'Неправильная почта или пароль' });
-    });
+    .catch(() => next(new AuthorizationError('Неправильные почта или пароль')));
 };
 
 module.exports = { getUser, createUser, login };
