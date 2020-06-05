@@ -2,10 +2,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const errors = require('./middlewares/request-err');
+
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const error = require('./middlewares/error');
-
 
 const { PORT = 3000 } = process.env;
 
@@ -27,6 +28,7 @@ app.use(router);
 
 app.use(errorLogger);
 
+app.use(errors);
 app.use(error);
 
 app.listen(PORT, () => {
