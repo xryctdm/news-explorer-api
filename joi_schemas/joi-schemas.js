@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 const { Joi } = require('celebrate');
 
 const signupSchema = Joi.object().keys({

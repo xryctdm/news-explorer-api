@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-unused-vars */
 module.exports = (err, req, res, next) => {
   const { joi } = err;
   if (joi) {

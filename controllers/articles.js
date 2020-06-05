@@ -1,5 +1,3 @@
-/* eslint-disable arrow-parens */
-/* eslint-disable no-unused-vars */
 const Article = require('../models/article');
 const { BadRequestError, NotFoundError, ForbiddenError } = require('../errors/index');
 
