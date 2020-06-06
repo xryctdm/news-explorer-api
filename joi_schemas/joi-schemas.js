@@ -2,13 +2,13 @@ const { Joi } = require('celebrate');
 
 const signupSchema = Joi.object().keys({
   email: Joi.string().required().email(),
-  password: Joi.string().required().regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
+  password: Joi.string().required(),
   name: Joi.string().required().min(2).max(30),
 });
 
 const signinSchema = Joi.object().keys({
   email: Joi.string().required().email(),
-  password: Joi.string().required().regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
+  password: Joi.string().required(),
 });
 
 const createArticleSchema = Joi.object().keys({
