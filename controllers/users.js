@@ -17,7 +17,6 @@ const createUser = (req, res, next) => {
   const {
     email, password, name,
   } = req.body;
-
   bcrypt.hash(password, 10)
     .then((hash) => User.create({
       email, password: hash, name,
@@ -26,7 +25,12 @@ const createUser = (req, res, next) => {
       name: user.name,
       email: user.email,
     }))
-    .catch(() => next(new BadRequestError('Данные введены непраильно')));
+    .catch((error) => {
+      if (error.name === 'MongoError' && error.code === 11000) {
+        next(new BadRequestError('Такой пользователь уже есть'));
+      }
+      next(new BadRequestError('Данные введены непраильно'));
+    });
 };
 
 const login = (req, res, next) => {

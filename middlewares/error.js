@@ -1,4 +1,6 @@
 module.exports = (err, req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
   const { statusCode = 500, message } = err;
 
   res
