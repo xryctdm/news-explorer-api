@@ -5,7 +5,7 @@
 * https://api.xryctdm-news-explorer.tk
 
 
-* http://84.201.172.63
+* http://84.201.173.24
 
 
 ## Установка
